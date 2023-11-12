@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 文件加速</title>
+    <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="./favicon.svg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 40px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        input[type="text"] {
+            width: calc(100% - 22px);
+            /* Adjust width to prevent overflow */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            /* Include padding and border in the width */
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .tips {
+            text-align: left;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+        
+        .footer {
+            font-size: 0.8em;
+            margin-top: 40px;
+        }
+        
+        @keyframes gradient-background {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        @media screen and (max-width: 600px) {
+            .container {
+                max-width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+        
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient-background 15s ease infinite;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('github-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                var githubUrl = document.getElementById('github-url').value;
+                window.open(location.href.substr(0, location.href.lastIndexOf('/') + 1) + githubUrl);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>GitHub 文件加速</h1>
+        <form id="github-form">
+            <input type="text" id="github-url" placeholder="键入Github文件链接" required pattern="^((https|http):\/\/)?(github\.com\/.+?\/.+?\/(?:releases|archive|blob|raw|suites)|((?:raw|gist)\.(?:githubusercontent|github)\.com))\/.+$">
+            <button type="submit">下载</button>
+        </form>
+        <p class="tips">GitHub文件链接带不带协议头都可以，支持release、archive以及文件，右键复制出来的链接都是符合标准的。release、archive使用cf加速，文件会跳转至JsDelivr。</p>
+        <p class="footer">该项目基于Cloudflare Workers</p>
+    </div>
+</body>
+
+</html>
