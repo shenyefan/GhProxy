@@ -4,7 +4,7 @@
  * static files (404.html, sw.js, conf.js)
  */
 const ASSET_URL = 'https://shenyefan.github.io/gh_dl_proxy/'
-    // 前缀，如果自定义路由为example.com/gh/*，将PREFIX改为 '/gh/'，注意，少一个杠都会错！
+
 const PREFIX = '/'
     // 分支文件使用jsDelivr镜像的开关，0为关闭，默认关闭
 const Config = {
@@ -23,13 +23,13 @@ const PREFLIGHT_INIT = {
     }),
 }
 
-
 const exp1 = /^(?:https?:\/\/)?github\.com\/.+?\/.+?\/(?:releases|archive)\/.*$/i
 const exp2 = /^(?:https?:\/\/)?github\.com\/.+?\/.+?\/(?:blob|raw)\/.*$/i
 const exp3 = /^(?:https?:\/\/)?github\.com\/.+?\/.+?\/(?:info|git-).*$/i
 const exp4 = /^(?:https?:\/\/)?raw\.(?:githubusercontent|github)\.com\/.+?\/.+?\/.+?\/.+$/i
 const exp5 = /^(?:https?:\/\/)?gist\.(?:githubusercontent|github)\.com\/.+?\/.+?\/.+$/i
 const exp6 = /^(?:https?:\/\/)?github\.com\/.+?\/.+?\/tags.*$/i
+const exp7 = /^(?:https?:\/\/)?github\.com\/.+?\/.+?\.git$/i
 
 /**
  * @param {any} body
@@ -40,7 +40,6 @@ function makeRes(body, status = 200, headers = {}) {
     headers['access-control-allow-origin'] = '*'
     return new Response(body, { status, headers })
 }
-
 
 /**
  * @param {string} urlStr
@@ -53,16 +52,14 @@ function newUrl(urlStr) {
     }
 }
 
-
 addEventListener('fetch', e => {
     const ret = fetchHandler(e)
         .catch(err => makeRes('cfworker error:\n' + err.stack, 502))
     e.respondWith(ret)
 })
 
-
 function checkUrl(u) {
-    for (let i of[exp1, exp2, exp3, exp4, exp5, exp6]) {
+    for (let i of[exp1, exp2, exp3, exp4, exp5, exp6, exp7]) {
         if (u.search(i) === 0) {
             return true
         }
@@ -81,9 +78,9 @@ async function fetchHandler(e) {
     if (path) {
         return Response.redirect('https://' + urlObj.host + PREFIX + path, 301)
     }
-    // cfworker 会把路径中的 `//` 合并成 `/`
     path = urlObj.href.substr(urlObj.origin.length + PREFIX.length).replace(/^https?:\/+/, 'https://')
-    if (path.search(exp1) === 0 || path.search(exp5) === 0 || path.search(exp6) === 0 || path.search(exp3) === 0 || path.search(exp4) === 0) {
+
+    if (path.search(exp1) === 0 || path.search(exp5) === 0 || path.search(exp6) === 0 || path.search(exp3) === 0 || path.search(exp4) === 0 || path.search(exp7) === 0) {
         return httpHandler(req, path)
     } else if (path.search(exp2) === 0) {
         if (Config.jsdelivr) {
@@ -144,7 +141,6 @@ function httpHandler(req, pathname) {
     return proxy(urlObj, reqInit)
 }
 
-
 /**
  *
  * @param {URL} urlObj
@@ -168,7 +164,6 @@ async function proxy(urlObj, reqInit) {
     }
     resHdrNew.set('access-control-expose-headers', '*')
     resHdrNew.set('access-control-allow-origin', '*')
-
     resHdrNew.delete('content-security-policy')
     resHdrNew.delete('content-security-policy-report-only')
     resHdrNew.delete('clear-site-data')
