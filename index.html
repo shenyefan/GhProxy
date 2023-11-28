@@ -104,7 +104,7 @@
     <div class="container">
         <h1>GitHub 文件加速</h1>
         <form id="github-form">
-            <input type="text" id="github-url" placeholder="键入Github文件链接" required pattern="^((https|http):\/\/)?(github\.com\/.+?\/.+?\/(?:releases|archive|blob|raw|suites|info|git-|tags)|((?:raw|gist)\.(?:githubusercontent|github)\.com)|github\.com\/.+?\/.+?\.git)\/.+$">
+            <input type="text" id="github-url" placeholder="键入Github文件链接" required pattern="^((https|http):\/\/)?(github\.com\/.+?\/.+?\/(releases|archive|blob|raw|info|git-|tags)|raw\.(githubusercontent|github)\.com\/.+?\/.+?\/.+?\/.+|gist\.(githubusercontent|github)\.com\/.+?\/.+?\/.+|github\.com\/.+?\/.+?\.git)\/?.*$">
             <button type="submit">下载</button>
         </form>
         <p class="tips">GitHub文件链接带不带协议头都可以，支持release、archive以及文件，右键复制出来的链接都是符合标准的。release、archive使用cf加速，文件会跳转至JsDelivr。</p>
