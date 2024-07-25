@@ -1,87 +1,74 @@
 <!DOCTYPE html>
-<html lang="zh">
-
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub 文件加速</title>
-    <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="./favicon.svg">
+    <title>GitHub 加速服务</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f8f9fa;
         }
-        
-        .container {
-            max-width: 600px;
-            background-color: #fff;
-            padding: 40px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+        .header {
+            background-color: #343a40;
+            color: white;
+            padding: 60px 0;
             text-align: center;
         }
-        
-        input[type="text"] {
-            width: calc(100% - 22px);
-            /* Adjust width to prevent overflow */
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header p {
+            margin: 5px 0 0;
+        }
+        .form-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .form-container input, .form-container button {
+            height: 46px;
+        }
+        .form-container input {
+            width: 60%;
+            margin-right: 10px;
+            border: 2px solid #454d55;
+            border-radius: 5px;
             padding: 10px;
-            margin-bottom: 20px;
-            border: 2px solid #ddd;
+            background-color: #454d55;
+            color: white;
+        }
+        .form-container input:focus {
+            background-color: #454d55;
+            color: white;
+            border: 2px solid #343a40;
+            box-shadow: none;
+        }
+        .form-container button {
+            width: 12%;
+            background-color: #e9ecef;
+            border-color: #e9ecef;
+            color: #212529;
             border-radius: 5px;
-            box-sizing: border-box;
-            /* Include padding and border in the width */
+            padding: 10px;
         }
-        
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
+        .form-container button:hover {
+            background-color: #495057;
+            border-color: #495057;
+        }
+        .tutorial {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .tutorial h2 {
+            margin-top: 0;
+        }
+        .tutorial pre {
+            background-color: #e9ecef;
+            padding: 10px;
             border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #0056b3;
-        }
-        
-        .tips {
-            text-align: left;
-            font-size: 0.9em;
-            margin-top: 20px;
-        }
-        
-        @keyframes gradient-background {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-        
-        @media screen and (max-width: 600px) {
-            .container {
-                max-width: 100%;
-                box-shadow: none;
-                border-radius: 0;
-            }
-        }
-        
-        body {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient-background 15s ease 在finite;
         }
     </style>
     <script>
@@ -94,16 +81,34 @@
         });
     </script>
 </head>
-
 <body>
-    <div class="container">
-        <h1>GitHub 文件加速</h1>
-        <form id="github-form">
-            <input type="text" id="github-url" placeholder="键入Github文件链接" required pattern="^((https|http):\/\/)?(github\.com\/.+?\/.+?\/(releases|archive|blob|raw|info|git-|tags)|raw\.(githubusercontent|github)\.com\/.+?\/.+?\/.+?\/.+|gist\.(githubusercontent|github)\.com\/.+?\/.+?\/.+|github\.com\/.+?\/.+?\.git)\/?.*$">
-            <button type="submit">下载</button>
-        </form>
-        <p class="tips">GitHub文件链接带不带协议头都可以，支持release、archive、git以及文件等。release、archive使用cf加速，文件会跳转至JsDelivr。</p>
+    <div class="header">
+        <h1>GitHub 加速服务</h1>
+        <p>对releases，archive，gist，raw等文件代理加速下载服务。</p>
+        <div class="container form-container">
+            <form id="github-form" class="form-inline justify-content-center">
+                <input type="text" id="github-url" class="form-control" placeholder="输入 GitHub 文件链接" required pattern="^((https|http):\/\/)?(github\.com\/.+?\/.+?\/(releases|archive|blob|raw|info|git-|tags)|raw\.(githubusercontent|github)\.com\/.+?\/.+?\/.+?\/.+|gist\.(githubusercontent|github)\.com\/.+?\/.+?\/.+|github\.com\/.+?\/.+?\.git)\/?.*$">
+                <button type="submit" class="btn btn-primary">下载</button>
+            </form>
+        </div>
     </div>
-</body>
 
+    <div class="container tutorial">
+        <h2>使用说明</h2>
+        <p>支持终端命令行 <code>git clone</code> <code>wget</code> <code>curl</code> 等工具下载。</p>
+        <p>支持 <code>raw.githubusercontent.com</code> <code>gist.github.com</code> <code>gist.githubusercontent.com</code> 文件下载。</p>
+        <p>注意：不支持 SSH Key 方式 <code>git clone</code> 下载。</p>
+        <h4>git clone</h4>
+        <pre><code>git clone https://gh.suki.icu/https://github.com/nginx/nginx.git</code></pre>
+        <h4>git clone 私有仓库</h4>
+        <p>Clone 私有仓库需要用户在 Personal access tokens 申请 Token 配合使用。</p>
+        <pre><code>git clone https://user:your_token@gh.suki.icu/https://github.com/your_name/your_private_repo</code></pre>
+        <h4>wget & curl</h4>
+        <pre><code>wget https://gh.suki.icu/https://github.com/nginx/nginx/archive/refs/heads/master.zip
+curl -O https://gh.suki.icu/https://raw.githubusercontent.com/nginx/agent/main/README.md</code></pre>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
