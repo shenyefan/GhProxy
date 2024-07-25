@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub 加速服务</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
@@ -87,11 +87,12 @@
         <h1>GitHub 加速服务</h1>
         <p>对releases，archive，gist，raw等文件代理加速下载服务。</p>
         <div class="container form-container">
-            <form id="github-form" class="form-inline justify-content-center">
-                <input type="text" id="github-url" class="form-control" placeholder="输入 GitHub 文件链接" required pattern="^((https|http):\/\/)?(github\.com\/.+?\/.+?\/(releases|archive|blob|raw|info|git-|tags)|raw\.(githubusercontent|github)\.com\/.+?\/.+?\/.+?\/.+|gist\.(githubusercontent|github)\.com\/.+?\/.+?\/.+|github\.com\/.+?\/.+?\.git)\/?.*$">
+            <form id="github-form" class="d-flex justify-content-center">
+                <input type="text" id="github-url" class="form-control me-2" placeholder="输入 GitHub 文件链接" required pattern="^((https|http):\/\/)?(github\.com\/.+?\/.+?\/(releases|archive|blob|raw|info|git-|tags)|raw\.(githubusercontent|github)\.com\/.+?\/.+?\/.+?\/.+|gist\.(githubusercontent|github)\.com\/.+?\/.+?\/.+|github\.com\/.+?\/.+?\.git)\/?.*$">
                 <button type="submit" class="btn btn-primary">下载</button>
             </form>
         </div>
+        
     </div>
 
     <div class="container tutorial">
@@ -108,8 +109,8 @@
         <pre><code>wget https://gh.suki.icu/https://github.com/nginx/nginx/archive/refs/heads/master.zip
 curl -O https://gh.suki.icu/https://raw.githubusercontent.com/nginx/agent/main/README.md</code></pre>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.11.8/cjs/popper.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.min.js"></script>
 </body>
 </html>
